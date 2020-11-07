@@ -33,6 +33,10 @@ public class Contact extends AbstractEntity implements Cloneable{
     @NotEmpty
     private String email;
 
+    @NotNull
+    @NotEmpty
+    private String phone;
+
     public String getFirstName() {
         return firstName;
     }
@@ -71,6 +75,14 @@ public class Contact extends AbstractEntity implements Cloneable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override

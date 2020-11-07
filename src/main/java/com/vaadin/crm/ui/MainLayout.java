@@ -1,6 +1,7 @@
 package com.vaadin.crm.ui;
 
 import com.vaadin.crm.ui.views.dashboard.DashboardView;
+import com.vaadin.crm.ui.views.lead.LeadView;
 import com.vaadin.crm.ui.views.list.ListView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -17,17 +18,24 @@ import com.vaadin.flow.router.RouterLink;
 @CssImport("./styles/views/helloworld/hello-world-view.css")
 public class MainLayout extends AppLayout {
 
+    private RouterLink listView;
+    private RouterLink leadManagement;
+
     public MainLayout() {
         createHeader();
         createDrawer();
     }
 
     private void createDrawer() {
-        RouterLink listLink = new RouterLink("List", ListView.class);
-        listLink.setHighlightCondition(HighlightConditions.sameLocation());
+        listView = new RouterLink("List", ListView.class);
+        listView.setHighlightCondition(HighlightConditions.sameLocation());
+
+        leadManagement = new RouterLink("Lead Management", LeadView.class);
+        leadManagement.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
-                listLink,
+                listView,
+                leadManagement,
                 new RouterLink("Dashboard", DashboardView.class)
         ));
     }
