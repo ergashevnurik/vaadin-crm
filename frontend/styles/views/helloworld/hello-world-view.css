@@ -21,7 +21,10 @@ a[highlight] {
 }
 
 /* List-View */
-
+.list-view {
+    box-shadow: inset 8px 8px 8px #f9f9f9,
+    inset 8px 8px 10px #f9f9f9;
+}
 .list-view .content {
   display: flex;
 }
@@ -53,6 +56,5 @@ a[highlight] {
 }
 
 .dashboard-view {
-    background: #f3f3f3;
     background-size: cover;
 }

@@ -1,8 +1,7 @@
-package com.vaadin.crm.ui.views.list;
+package com.vaadin.crm.ui.views.lead;
 
 import com.vaadin.crm.backend.entity.Company;
 import com.vaadin.crm.backend.entity.Contact;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -19,64 +18,57 @@ import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
-public class ContactForm extends FormLayout {
+public class LeadForm extends FormLayout {
 
     private Contact contact;
 
-    private TextField firstName = new TextField("First Name");
+    private TextField firstName = new TextField("Firs Name");
     private TextField lastName = new TextField("Last Name");
-    private EmailField email = new EmailField("Email");
     private TextField phone = new TextField("Phone");
+    private EmailField email = new EmailField("Email");
     private ComboBox<Contact.Status> status = new ComboBox<>("Status");
     private ComboBox<Company> company = new ComboBox<>("Company");
 
-    private Button save = new Button("Save");
-    private Button delete = new Button("Delete");
-    private Button close = new Button("Cancel");
+    private HorizontalLayout horizontalLayout;
+
+    private Button save;
+    private Button delete;
+    private Button cancel;
 
     private Binder<Contact> binder = new Binder<>(Contact.class);
 
-    public ContactForm(List<Company> companies) {
 
+    public LeadForm(List<Company> companies) {
         addClassName("contact-form");
         binder.bindInstanceFields(this);
-
         company.setItems(companies);
         company.setItemLabelGenerator(Company::getName);
         status.setItems(Contact.Status.values());
 
-        add(
-                firstName,
-                lastName,
-                email,
-                phone,
-                status,
-                company,
-                createButtonsLayout()
-        );
-
+        add(firstName,lastName,phone,email, status,company, addButton());
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-        binder.readBean(contact);
-    }
-
-    private Component createButtonsLayout() {
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-
-        save.addClickShortcut(Key.ENTER);
-        close.addClickShortcut(Key.ESCAPE);
-
-        save.addClickListener(click -> validateAndSave());
-        delete.addClickListener(click -> fireEvent(new DeleteEvent(this, contact)));
-        close.addClickListener(click -> fireEvent(new CloseEvent(this)));
-
+    private HorizontalLayout addButton() {
         binder.addStatusChangeListener(evt -> save.setEnabled(binder.isValid()));
 
-        return new HorizontalLayout(save, delete, close);
+        save = new Button("Add");
+        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        save.addClickShortcut(Key.ENTER);
+        save.addClickListener(click -> validateAndSave());
+
+        delete = new Button("Delete");
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        delete.addClickListener(click -> fireEvent(new LeadForm.DeleteEvent(this, contact)));
+
+        cancel = new Button("Cancel");
+        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        cancel.addClickShortcut(Key.ESCAPE);
+        cancel.addClickListener(click -> fireEvent(new CancelEvent(this)));
+
+        horizontalLayout = new HorizontalLayout(save, delete, cancel);
+        horizontalLayout.setWidth("100%");
+
+        return horizontalLayout;
     }
 
     private void validateAndSave() {
@@ -87,17 +79,22 @@ public class ContactForm extends FormLayout {
 
         try {
             binder.writeBean(contact);
-            fireEvent(new SaveEvent(this, contact));
+            fireEvent(new LeadForm.SaveEvent(this, contact));
         } catch (ValidationException e) {
             e.printStackTrace();
         }
 
     }
 
-    public static abstract class ContactFormEvent extends ComponentEvent<ContactForm> {
+    public void setContact(Contact contact) {
+        this.contact = contact;
+        binder.readBean(contact);
+    }
+
+    public static abstract class LeadFormEvent extends ComponentEvent<LeadForm> {
         private Contact contact;
 
-        protected ContactFormEvent(ContactForm source, Contact contact) {
+        public LeadFormEvent(LeadForm source, Contact contact) {
             super(source, false);
             this.contact = contact;
         }
@@ -107,20 +104,20 @@ public class ContactForm extends FormLayout {
         }
     }
 
-    public static class SaveEvent extends ContactFormEvent {
-        protected SaveEvent(ContactForm source, Contact contact) {
+    public static class SaveEvent extends LeadFormEvent {
+        public SaveEvent(LeadForm source, Contact contact) {
             super(source, contact);
         }
     }
 
-    public static class DeleteEvent extends ContactFormEvent {
-        protected DeleteEvent(ContactForm source, Contact contact) {
+    public static class DeleteEvent extends LeadFormEvent {
+        public DeleteEvent(LeadForm source, Contact contact) {
             super(source, contact);
         }
     }
 
-    public static class CloseEvent extends ContactFormEvent {
-        protected CloseEvent(ContactForm source) {
+    public static class CancelEvent extends LeadFormEvent {
+        public CancelEvent(LeadForm source) {
             super(source, null);
         }
     }
@@ -128,6 +125,5 @@ public class ContactForm extends FormLayout {
     public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
         return getEventBus().addListener(eventType, listener);
     }
-
 
 }
