@@ -34,7 +34,10 @@ public class MainLayout extends AppLayout {
         Anchor service = new Anchor("service", "Services");
         service.getStyle().set("padding", "12px 20px");
         service.getStyle().set("color", "#fff");
-        div.add(aboutUs, service);
+        Anchor login = new Anchor("login", "Login");
+        login.getStyle().set("padding", "12px 20px");
+        login.getStyle().set("color", "#fff");
+        div.add(aboutUs, service, login);
 
         HorizontalLayout header = new HorizontalLayout(logo, div);
         header.expand(logo);
