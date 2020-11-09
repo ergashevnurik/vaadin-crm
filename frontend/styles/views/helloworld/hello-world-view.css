@@ -8,8 +8,10 @@ hello-world-view,
 
 a[highlight] {
     font-weight: bold;
-    border-right: 3px solid blue;
-    padding-right: 15px;
+    background: blue;
+    padding: 12px 20px;
+    color: #fff;
+    width: 80%;
 }
 
 .header{

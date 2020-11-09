@@ -1,6 +1,7 @@
 package com.vaadin.crm.ui.views.login;
 
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -25,9 +26,10 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         setAlignItems(Alignment.CENTER);
 
         login.setAction("login");
+        login.setForgotPasswordButtonVisible(false);
 
         add(
-                new H1("Vaadin CRM"),
+                new H3("Vaadin CRM"),
                 login
         );
 
