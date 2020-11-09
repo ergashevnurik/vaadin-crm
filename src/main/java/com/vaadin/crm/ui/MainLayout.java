@@ -20,6 +20,7 @@ public class MainLayout extends AppLayout {
 
     private RouterLink listView;
     private RouterLink leadManagement;
+    private RouterLink dashboard;
 
     public MainLayout() {
         createHeader();
@@ -33,10 +34,13 @@ public class MainLayout extends AppLayout {
         leadManagement = new RouterLink("Lead Management", LeadView.class);
         leadManagement.setHighlightCondition(HighlightConditions.sameLocation());
 
+        dashboard = new RouterLink("Dashboard", DashboardView.class);
+        dashboard.setHighlightCondition(HighlightConditions.sameLocation());
+
         addToDrawer(new VerticalLayout(
+                dashboard,
                 listView,
-                leadManagement,
-                new RouterLink("Dashboard", DashboardView.class)
+                leadManagement
         ));
     }
 
