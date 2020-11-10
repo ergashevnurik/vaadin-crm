@@ -1,7 +1,7 @@
 package com.vaadin.crm.ui.views.lead;
 
 import com.vaadin.crm.backend.entity.Company;
-import com.vaadin.crm.backend.entity.Contact;
+import com.vaadin.crm.backend.entity.Order;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -18,15 +18,15 @@ import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
-public class LeadForm extends FormLayout {
+public class OrderForm extends FormLayout {
 
-    private Contact contact;
+    private Order order;
 
     private TextField firstName = new TextField("Firs Name");
     private TextField lastName = new TextField("Last Name");
     private TextField phone = new TextField("Phone");
     private EmailField email = new EmailField("Email");
-    private ComboBox<Contact.Status> status = new ComboBox<>("Status");
+    private ComboBox<Order.OrderStatus> status = new ComboBox<>("Status");
     private ComboBox<Company> company = new ComboBox<>("Company");
 
     private HorizontalLayout horizontalLayout;
@@ -35,15 +35,15 @@ public class LeadForm extends FormLayout {
     private Button delete;
     private Button cancel;
 
-    private Binder<Contact> binder = new Binder<>(Contact.class);
+    private Binder<Order> binder = new Binder<>(Order.class);
 
 
-    public LeadForm(List<Company> companies) {
+    public OrderForm(List<Company> companies) {
         addClassName("contact-form");
         binder.bindInstanceFields(this);
         company.setItems(companies);
         company.setItemLabelGenerator(Company::getName);
-        status.setItems(Contact.Status.values());
+        status.setItems(Order.OrderStatus.values());
 
         add(firstName,lastName,phone,email, status,company, addButton());
     }
@@ -58,7 +58,7 @@ public class LeadForm extends FormLayout {
 
         delete = new Button("Delete");
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        delete.addClickListener(click -> fireEvent(new LeadForm.DeleteEvent(this, contact)));
+        delete.addClickListener(click -> fireEvent(new OrderForm.DeleteEvent(this, order)));
 
         cancel = new Button("Cancel");
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -78,46 +78,46 @@ public class LeadForm extends FormLayout {
         }*/
 
         try {
-            binder.writeBean(contact);
-            fireEvent(new LeadForm.SaveEvent(this, contact));
+            binder.writeBean(order);
+            fireEvent(new OrderForm.SaveEvent(this, order));
         } catch (ValidationException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-        binder.readBean(contact);
+    public void setOrder(Order order) {
+        this.order = order;
+        binder.readBean(order);
     }
 
-    public static abstract class LeadFormEvent extends ComponentEvent<LeadForm> {
-        private Contact contact;
+    public static abstract class OrderFormEvent extends ComponentEvent<OrderForm> {
+        private Order order;
 
-        public LeadFormEvent(LeadForm source, Contact contact) {
+        public OrderFormEvent(OrderForm source, Order order) {
             super(source, false);
-            this.contact = contact;
+            this.order = order;
         }
 
-        public Contact getContact() {
-            return contact;
-        }
-    }
-
-    public static class SaveEvent extends LeadFormEvent {
-        public SaveEvent(LeadForm source, Contact contact) {
-            super(source, contact);
+        public Order getOrder() {
+            return order;
         }
     }
 
-    public static class DeleteEvent extends LeadFormEvent {
-        public DeleteEvent(LeadForm source, Contact contact) {
-            super(source, contact);
+    public static class SaveEvent extends OrderFormEvent {
+        public SaveEvent(OrderForm source, Order order) {
+            super(source, order);
         }
     }
 
-    public static class CancelEvent extends LeadFormEvent {
-        public CancelEvent(LeadForm source) {
+    public static class DeleteEvent extends OrderFormEvent {
+        public DeleteEvent(OrderForm source, Order order) {
+            super(source, order);
+        }
+    }
+
+    public static class CancelEvent extends OrderFormEvent {
+        public CancelEvent(OrderForm source) {
             super(source, null);
         }
     }
