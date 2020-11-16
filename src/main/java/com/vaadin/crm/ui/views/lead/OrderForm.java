@@ -22,10 +22,10 @@ public class OrderForm extends FormLayout {
 
     private Order order;
 
-    private TextField firstName = new TextField("Firs Name");
-    private TextField lastName = new TextField("Last Name");
-    private TextField phone = new TextField("Phone");
-    private EmailField email = new EmailField("Email");
+    private TextField name = new TextField("Name");
+    private TextField brand = new TextField("Brand");
+    private TextField keywords = new TextField("Keywords");
+    private EmailField link = new EmailField("Link");
     private ComboBox<Order.OrderStatus> status = new ComboBox<>("Status");
     private ComboBox<Company> company = new ComboBox<>("Company");
 
@@ -45,7 +45,7 @@ public class OrderForm extends FormLayout {
         company.setItemLabelGenerator(Company::getName);
         status.setItems(Order.OrderStatus.values());
 
-        add(firstName,lastName,phone,email, status,company, addButton());
+        add(name,brand,keywords,link, status,company, addButton());
     }
 
     private HorizontalLayout addButton() {

@@ -1,5 +1,6 @@
 package com.vaadin.crm.ui.views.lead;
 
+import com.vaadin.crm.backend.entity.Company;
 import com.vaadin.crm.backend.entity.Order;
 import com.vaadin.crm.backend.service.CompanyService;
 import com.vaadin.crm.backend.service.OrderService;
@@ -30,6 +31,7 @@ public class OrderView extends VerticalLayout {
         this.orderService = orderService;
         addClassName("list-view");
         setSizeFull();
+        configureGrid();
 
         form = new OrderForm(companyService.findAll());
         form.addListener(OrderForm.SaveEvent.class, this::save);
@@ -40,7 +42,6 @@ public class OrderView extends VerticalLayout {
         content.addClassName("content");
         content.setSizeFull();
 
-        configureGrid();
         add(getToolBar(), content);
 
         updateList();
@@ -50,7 +51,13 @@ public class OrderView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassName("contact-grid");
         grid.setSizeFull();
+        grid.removeColumnByKey("company");
         grid.setColumns("name", "brand", "keywords", "orderStatus");
+
+        grid.addColumn(contact -> {
+            Company company = contact.getCompany();
+            return company == null ? "-" : company.getName();
+        }).setHeader("Company");
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 

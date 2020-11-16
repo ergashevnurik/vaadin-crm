@@ -2,14 +2,11 @@ package com.vaadin.crm.backend.entity;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "order")
+@Table(name = "EdsOrder")
 public class Order extends AbstractEntity implements Cloneable {
 
     public enum OrderStatus {
@@ -31,6 +28,10 @@ public class Order extends AbstractEntity implements Cloneable {
     @NotNull
     @NotEmpty
     private String brand;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -74,5 +75,13 @@ public class Order extends AbstractEntity implements Cloneable {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
