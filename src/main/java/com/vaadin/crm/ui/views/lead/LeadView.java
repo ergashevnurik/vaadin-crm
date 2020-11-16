@@ -1,9 +1,9 @@
 package com.vaadin.crm.ui.views.lead;
 
 import com.vaadin.crm.backend.entity.Company;
-import com.vaadin.crm.backend.entity.Order;
+import com.vaadin.crm.backend.entity.Lead;
 import com.vaadin.crm.backend.service.CompanyService;
-import com.vaadin.crm.backend.service.OrderService;
+import com.vaadin.crm.backend.service.LeadService;
 import com.vaadin.crm.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -17,26 +17,26 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "orderView", layout = MainLayout.class)
+@Route(value = "leadView", layout = MainLayout.class)
 @PageTitle("Order Management | Vaadin CRM")
-public class OrderView extends VerticalLayout {
+public class LeadView extends VerticalLayout {
 
-    private final OrderForm form;
+    private final LeadForm form;
 
-    private Grid<Order> grid = new Grid<>(Order.class);
-    private OrderService orderService;
+    private Grid<Lead> grid = new Grid<>(Lead.class);
+    private LeadService orderService;
     private TextField filter = new TextField();
 
-    public OrderView(OrderService orderService, CompanyService companyService) {
+    public LeadView(LeadService orderService, CompanyService companyService) {
         this.orderService = orderService;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        form = new OrderForm(companyService.findAll());
-        form.addListener(OrderForm.SaveEvent.class, this::save);
-        form.addListener(OrderForm.DeleteEvent.class, this::delete);
-        form.addListener(OrderForm.CancelEvent.class, e -> clearForm());
+        form = new LeadForm(companyService.findAll());
+        form.addListener(LeadForm.SaveEvent.class, this::save);
+        form.addListener(LeadForm.DeleteEvent.class, this::delete);
+        form.addListener(LeadForm.CancelEvent.class, e -> clearForm());
 
         Div content = new Div(grid, form);
         content.addClassName("content");
@@ -85,7 +85,7 @@ public class OrderView extends VerticalLayout {
 
     private void addNewLead() {
         grid.asSingleSelect().clear();
-        edit(new Order());
+        edit(new Lead());
     }
 
     private void updateList() {
@@ -98,19 +98,19 @@ public class OrderView extends VerticalLayout {
         removeClassName("editing");
     }
 
-    private void delete(OrderForm.DeleteEvent deleteEvent) {
+    private void delete(LeadForm.DeleteEvent deleteEvent) {
         orderService.delete(deleteEvent.getOrder());
         updateList();
         clearForm();
     }
 
-    private void save(OrderForm.SaveEvent saveEvent) {
+    private void save(LeadForm.SaveEvent saveEvent) {
         orderService.save(saveEvent.getOrder());
         updateList();
         clearForm();
     }
 
-    private void edit(Order order) {
+    private void edit(Lead order) {
         if (order == null) {
             clearForm();
         } else {

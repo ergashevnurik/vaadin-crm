@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "EdsOrder")
-public class Order extends AbstractEntity implements Cloneable {
+public class Lead extends AbstractEntity implements Cloneable {
 
     public enum OrderStatus {
         Ordered, UnderConsideration, Canceled;
@@ -35,7 +35,7 @@ public class Order extends AbstractEntity implements Cloneable {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Order.OrderStatus orderStatus;
+    private Lead.OrderStatus orderStatus;
 
     public String getName() {
         return name;

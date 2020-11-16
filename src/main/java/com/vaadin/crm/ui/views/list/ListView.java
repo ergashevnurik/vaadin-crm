@@ -31,8 +31,6 @@ public class ListView extends VerticalLayout {
         setSizeFull();
         configuredGrid();
 
-
-
         form = new ContactForm(companyService.findAll());
         form.addListener(ContactForm.SaveEvent.class, this::saveContact);
         form.addListener(ContactForm.DeleteEvent.class, this::deleteContact);

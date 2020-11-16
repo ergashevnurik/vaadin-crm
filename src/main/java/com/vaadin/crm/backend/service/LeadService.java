@@ -1,23 +1,23 @@
 package com.vaadin.crm.backend.service;
 
-import com.vaadin.crm.backend.entity.Order;
-import com.vaadin.crm.backend.repository.OrderRepository;
+import com.vaadin.crm.backend.entity.Lead;
+import com.vaadin.crm.backend.repository.LeadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrderService {
+public class LeadService {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private LeadRepository orderRepository;
 
-    public List<Order> findAll() {
+    public List<Lead> findAll() {
         return orderRepository.findAll();
     }
 
-    public List<Order> findAll(String filterText) {
+    public List<Lead> findAll(String filterText) {
         if (filterText.isEmpty() || filterText == null) {
            return orderRepository.findAll();
         } else {
@@ -25,11 +25,11 @@ public class OrderService {
         }
     }
 
-    public void save(Order order) {
+    public void save(Lead order) {
         orderRepository.save(order);
     }
 
-    public void delete(Order order) {
+    public void delete(Lead order) {
         orderRepository.deleteById(order.getId());
     }
 

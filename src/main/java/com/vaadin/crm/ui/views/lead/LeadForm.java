@@ -1,7 +1,7 @@
 package com.vaadin.crm.ui.views.lead;
 
 import com.vaadin.crm.backend.entity.Company;
-import com.vaadin.crm.backend.entity.Order;
+import com.vaadin.crm.backend.entity.Lead;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -18,15 +18,15 @@ import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
-public class OrderForm extends FormLayout {
+public class LeadForm extends FormLayout {
 
-    private Order order;
+    private Lead order;
 
     private TextField name = new TextField("Name");
     private TextField brand = new TextField("Brand");
     private TextField keywords = new TextField("Keywords");
     private EmailField link = new EmailField("Link");
-    private ComboBox<Order.OrderStatus> status = new ComboBox<>("Status");
+    private ComboBox<Lead.OrderStatus> status = new ComboBox<>("Status");
     private ComboBox<Company> company = new ComboBox<>("Company");
 
     private HorizontalLayout horizontalLayout;
@@ -35,15 +35,15 @@ public class OrderForm extends FormLayout {
     private Button delete;
     private Button cancel;
 
-    private Binder<Order> binder = new Binder<>(Order.class);
+    private Binder<Lead> binder = new Binder<>(Lead.class);
 
 
-    public OrderForm(List<Company> companies) {
+    public LeadForm(List<Company> companies) {
         addClassName("contact-form");
         binder.bindInstanceFields(this);
         company.setItems(companies);
         company.setItemLabelGenerator(Company::getName);
-        status.setItems(Order.OrderStatus.values());
+        status.setItems(Lead.OrderStatus.values());
 
         add(name,brand,keywords,link, status,company, addButton());
     }
@@ -58,7 +58,7 @@ public class OrderForm extends FormLayout {
 
         delete = new Button("Delete");
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        delete.addClickListener(click -> fireEvent(new OrderForm.DeleteEvent(this, order)));
+        delete.addClickListener(click -> fireEvent(new LeadForm.DeleteEvent(this, order)));
 
         cancel = new Button("Cancel");
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -79,45 +79,45 @@ public class OrderForm extends FormLayout {
 
         try {
             binder.writeBean(order);
-            fireEvent(new OrderForm.SaveEvent(this, order));
+            fireEvent(new LeadForm.SaveEvent(this, order));
         } catch (ValidationException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Lead order) {
         this.order = order;
         binder.readBean(order);
     }
 
-    public static abstract class OrderFormEvent extends ComponentEvent<OrderForm> {
-        private Order order;
+    public static abstract class OrderFormEvent extends ComponentEvent<LeadForm> {
+        private Lead order;
 
-        public OrderFormEvent(OrderForm source, Order order) {
+        public OrderFormEvent(LeadForm source, Lead order) {
             super(source, false);
             this.order = order;
         }
 
-        public Order getOrder() {
+        public Lead getOrder() {
             return order;
         }
     }
 
     public static class SaveEvent extends OrderFormEvent {
-        public SaveEvent(OrderForm source, Order order) {
+        public SaveEvent(LeadForm source, Lead order) {
             super(source, order);
         }
     }
 
     public static class DeleteEvent extends OrderFormEvent {
-        public DeleteEvent(OrderForm source, Order order) {
+        public DeleteEvent(LeadForm source, Lead order) {
             super(source, order);
         }
     }
 
     public static class CancelEvent extends OrderFormEvent {
-        public CancelEvent(OrderForm source) {
+        public CancelEvent(LeadForm source) {
             super(source, null);
         }
     }
