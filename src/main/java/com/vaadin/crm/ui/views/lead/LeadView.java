@@ -24,11 +24,11 @@ public class LeadView extends VerticalLayout {
     private final LeadForm form;
 
     private Grid<Lead> grid = new Grid<>(Lead.class);
-    private LeadService orderService;
+    private LeadService leadService;
     private TextField filter = new TextField();
 
-    public LeadView(LeadService orderService, CompanyService companyService) {
-        this.orderService = orderService;
+    public LeadView(LeadService leadService, CompanyService companyService) {
+        this.leadService = leadService;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
@@ -52,7 +52,7 @@ public class LeadView extends VerticalLayout {
         grid.addClassName("contact-grid");
         grid.setSizeFull();
         grid.removeColumnByKey("company");
-        grid.setColumns("name", "brand", "keywords", "orderStatus");
+        grid.setColumns("name", "orderStatus");
 
         grid.addColumn(contact -> {
             Company company = contact.getCompany();
@@ -89,7 +89,7 @@ public class LeadView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(orderService.findAll(filter.getValue()));
+        grid.setItems(leadService.findAll(filter.getValue()));
     }
 
     private void clearForm() {
@@ -99,13 +99,13 @@ public class LeadView extends VerticalLayout {
     }
 
     private void delete(LeadForm.DeleteEvent deleteEvent) {
-        orderService.delete(deleteEvent.getOrder());
+        leadService.delete(deleteEvent.getLead());
         updateList();
         clearForm();
     }
 
     private void save(LeadForm.SaveEvent saveEvent) {
-        orderService.save(saveEvent.getOrder());
+        leadService.save(saveEvent.getLead());
         updateList();
         clearForm();
     }

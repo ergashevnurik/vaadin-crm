@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LeadRepository extends JpaRepository<Lead, Long> {
-    @Query("select o from Lead o " + "where lower(o.name) like lower(concat('%', :filterText, '%')) " +
-            "or lower(o.keywords) like lower(concat('%', :filterText, '%'))")
+    @Query("select l from Lead l " + "where lower(l.name) like lower(concat('%', :filterText, '%')) "/* +
+            "or lower(l.keywords) like lower(concat('%', :filterText, '%'))"*/)
     List<Lead> search(@Param("filterText")String filterText);
 }

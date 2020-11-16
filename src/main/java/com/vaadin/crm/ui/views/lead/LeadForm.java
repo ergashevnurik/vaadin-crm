@@ -10,7 +10,6 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
@@ -23,9 +22,6 @@ public class LeadForm extends FormLayout {
     private Lead order;
 
     private TextField name = new TextField("Name");
-    private TextField brand = new TextField("Brand");
-    private TextField keywords = new TextField("Keywords");
-    private EmailField link = new EmailField("Link");
     private ComboBox<Lead.OrderStatus> status = new ComboBox<>("Status");
     private ComboBox<Company> company = new ComboBox<>("Company");
 
@@ -45,7 +41,7 @@ public class LeadForm extends FormLayout {
         company.setItemLabelGenerator(Company::getName);
         status.setItems(Lead.OrderStatus.values());
 
-        add(name,brand,keywords,link, status,company, addButton());
+        add(name, status, company, addButton());
     }
 
     private HorizontalLayout addButton() {
@@ -91,32 +87,32 @@ public class LeadForm extends FormLayout {
         binder.readBean(order);
     }
 
-    public static abstract class OrderFormEvent extends ComponentEvent<LeadForm> {
-        private Lead order;
+    public static abstract class LeadFormEvent extends ComponentEvent<LeadForm> {
+        private Lead lead;
 
-        public OrderFormEvent(LeadForm source, Lead order) {
+        public LeadFormEvent(LeadForm source, Lead lead) {
             super(source, false);
-            this.order = order;
+            this.lead = lead;
         }
 
-        public Lead getOrder() {
-            return order;
-        }
-    }
-
-    public static class SaveEvent extends OrderFormEvent {
-        public SaveEvent(LeadForm source, Lead order) {
-            super(source, order);
+        public Lead getLead() {
+            return lead;
         }
     }
 
-    public static class DeleteEvent extends OrderFormEvent {
-        public DeleteEvent(LeadForm source, Lead order) {
-            super(source, order);
+    public static class SaveEvent extends LeadFormEvent {
+        public SaveEvent(LeadForm source, Lead lead) {
+            super(source, lead);
         }
     }
 
-    public static class CancelEvent extends OrderFormEvent {
+    public static class DeleteEvent extends LeadFormEvent {
+        public DeleteEvent(LeadForm source, Lead lead) {
+            super(source, lead);
+        }
+    }
+
+    public static class CancelEvent extends LeadFormEvent {
         public CancelEvent(LeadForm source) {
             super(source, null);
         }

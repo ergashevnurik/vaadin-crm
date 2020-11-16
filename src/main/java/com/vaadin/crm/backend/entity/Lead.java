@@ -17,18 +17,6 @@ public class Lead extends AbstractEntity implements Cloneable {
     @NotEmpty
     private String name;
 
-    @NotNull
-    @NotEmpty
-    private String keywords;
-
-    @NotNull
-    @NotEmpty
-    private String link;
-
-    @NotNull
-    @NotEmpty
-    private String brand;
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -43,30 +31,6 @@ public class Lead extends AbstractEntity implements Cloneable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public OrderStatus getOrderStatus() {
