@@ -12,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "main", layout = MainLayout.class)
 @PageTitle("Main View | Vaadin CRM")
 public class MainView extends VerticalLayout {
 
