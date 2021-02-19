@@ -3,6 +3,7 @@ package com.vaadin.crm.ui;
 import com.vaadin.crm.ui.views.dashboard.DashboardView;
 import com.vaadin.crm.ui.views.lead.LeadView;
 import com.vaadin.crm.ui.views.list.ListView;
+import com.vaadin.crm.ui.views.user.UserView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -30,6 +31,7 @@ public class MainLayout extends AppLayout {
     private RouterLink listView;
     private RouterLink leadManagement;
     private RouterLink dashboard;
+    private RouterLink users;
 
     public MainLayout() {
         createHeader();
@@ -46,10 +48,14 @@ public class MainLayout extends AppLayout {
         dashboard = new RouterLink("Dashboard", DashboardView.class);
         dashboard.setHighlightCondition(HighlightConditions.sameLocation());
 
+        users = new RouterLink("User", UserView.class);
+        users.setHighlightCondition(HighlightConditions.sameLocation());
+
         addToDrawer(new VerticalLayout(
                 dashboard,
                 listView,
-                leadManagement
+                leadManagement,
+                users
         ));
     }
 
