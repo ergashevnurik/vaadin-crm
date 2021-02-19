@@ -2,6 +2,7 @@ package com.vaadin.crm.ui.views.list;
 
 import com.vaadin.crm.backend.entity.Company;
 import com.vaadin.crm.backend.entity.Contact;
+import com.vaadin.crm.backend.entity.Status;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -27,7 +28,7 @@ public class ContactForm extends FormLayout {
     private TextField lastName = new TextField("Last Name");
     private EmailField email = new EmailField("Email");
     private TextField phone = new TextField("Phone");
-    private ComboBox<Contact.Status> status = new ComboBox<>("Status");
+    private ComboBox<Status> status = new ComboBox<>("Status");
     private ComboBox<Company> company = new ComboBox<>("Company");
 
     private Button save = new Button("Save");
@@ -43,7 +44,7 @@ public class ContactForm extends FormLayout {
 
         company.setItems(companies);
         company.setItemLabelGenerator(Company::getName);
-        status.setItems(Contact.Status.values());
+        status.setItems(Status.values());
 
         add(
                 firstName,

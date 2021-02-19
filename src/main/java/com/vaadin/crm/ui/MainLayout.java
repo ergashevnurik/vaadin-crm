@@ -37,7 +37,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
-        listView = new RouterLink("List", ListView.class);
+        listView = new RouterLink("Contacts", ListView.class);
         listView.setHighlightCondition(HighlightConditions.sameLocation());
 
         leadManagement = new RouterLink("Lead Management", LeadView.class);

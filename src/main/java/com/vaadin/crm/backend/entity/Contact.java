@@ -8,9 +8,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Contact extends AbstractEntity implements Cloneable{
-    public enum Status {
-        ImportedLead, NotContacted, Contacted, Customer, ClosedLost
-    }
+
 
     @NotNull
     @NotEmpty
@@ -26,7 +24,7 @@ public class Contact extends AbstractEntity implements Cloneable{
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private Contact.Status status;
+    private Status status;
 
     @Email
     @NotNull
