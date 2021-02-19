@@ -8,13 +8,15 @@ hello-world-view,
 
 a[highlight] {
     font-weight: bold;
-    background: blue;
+    background: black;
     padding: 12px 20px;
     color: #fff;
-    width: 80%;
+    width: 100%;
 }
 
 .header{
+    background: black;
+    color: white;
     padding: 0 var(--lumo-space-e);
 }
 .header h1.logo {
