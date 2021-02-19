@@ -1,9 +1,12 @@
 package com.vaadin.crm.ui.views.user;
 
+import com.vaadin.crm.backend.entity.User;
 import com.vaadin.crm.ui.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -13,18 +16,34 @@ import com.vaadin.flow.router.Route;
 public class UserView extends VerticalLayout {
 
     private Button addButton;
-    private Div mainContainer;
+    private HorizontalLayout horizontalLayoutOfBUttonAndTextField;
+    private Grid<User> grid = new Grid<>(User.class);
 
     public UserView() {
         setSizeFull();
-        add(initButtons());
+        configureGrid();
+
+        Div content = new Div(grid);
+        content.addClassName("content");
+        content.setSizeFull();
+
+        add(initHeaderTop(), content);
     }
 
-    private Component initButtons() {
+    private HorizontalLayout initHeaderTop() {
+        horizontalLayoutOfBUttonAndTextField = new HorizontalLayout();
         addButton = new Button("Add new User");
-        mainContainer = new Div();
-        mainContainer.add(addButton);
-        return mainContainer;
+
+        horizontalLayoutOfBUttonAndTextField.add(addButton);
+        return horizontalLayoutOfBUttonAndTextField;
+    }
+
+    private void configureGrid() {
+        grid.setClassName("contact-grid");
+        grid.setSizeFull();
+        grid.setColumns("username", "roles", "password");
+
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
 }
