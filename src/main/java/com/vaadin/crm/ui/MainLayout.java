@@ -10,6 +10,8 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -29,9 +31,20 @@ import com.vaadin.flow.server.PWA;
 public class MainLayout extends AppLayout {
 
     private RouterLink listView;
+    private Div listViewContainer;
+    private Icon iconOfListView;
+
     private RouterLink leadManagement;
+    private Div leadManagementContainer;
+    private Icon iconOfLeadManagement;
+
     private RouterLink dashboard;
+    private Div dashboardContainer;
+    private Icon iconOfDashboard;
+
     private RouterLink users;
+    private Div usersContainer;
+    private Icon iconOfUsers;
 
     public MainLayout() {
         createHeader();
@@ -39,23 +52,36 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
+
+        listViewContainer = new Div();
         listView = new RouterLink("Contacts", ListView.class);
         listView.setHighlightCondition(HighlightConditions.sameLocation());
+        iconOfListView = new Icon(VaadinIcon.TABLE);
+        listViewContainer.add(iconOfListView, listView);
 
+        leadManagementContainer = new Div();
         leadManagement = new RouterLink("Lead Management", LeadView.class);
         leadManagement.setHighlightCondition(HighlightConditions.sameLocation());
+        iconOfLeadManagement = new Icon(VaadinIcon.USER);
+        leadManagementContainer.add(iconOfLeadManagement, leadManagement);
 
+        dashboardContainer = new Div();
         dashboard = new RouterLink("Dashboard", DashboardView.class);
         dashboard.setHighlightCondition(HighlightConditions.sameLocation());
+        iconOfDashboard = new Icon(VaadinIcon.DASHBOARD);
+        dashboardContainer.add(iconOfDashboard, dashboard);
 
+        usersContainer = new Div();
         users = new RouterLink("User", UserView.class);
         users.setHighlightCondition(HighlightConditions.sameLocation());
+        iconOfUsers = new Icon(VaadinIcon.USERS);
+        usersContainer.add(iconOfUsers, users);
 
         addToDrawer(new VerticalLayout(
-                dashboard,
-                listView,
-                leadManagement,
-                users
+                dashboardContainer,
+                listViewContainer,
+                leadManagementContainer,
+                usersContainer
         ));
     }
 
