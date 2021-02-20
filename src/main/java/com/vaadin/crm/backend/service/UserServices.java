@@ -1,5 +1,6 @@
 package com.vaadin.crm.backend.service;
 
+import com.vaadin.crm.backend.entity.Lead;
 import com.vaadin.crm.backend.entity.User;
 import com.vaadin.crm.backend.exception.UserNotFoundException;
 import com.vaadin.crm.backend.repository.UserRepository;
@@ -37,6 +38,18 @@ public class UserServices implements UserDetailsService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public List<User> findAll(String filterText) {
+        if (filterText.isEmpty() || filterText == null) {
+            return userRepository.findAll();
+        } else {
+            return userRepository.search(filterText);
+        }
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     public ResponseEntity<User> getUserById(Long id) {
