@@ -1,12 +1,18 @@
 package com.vaadin.crm.backend.service;
 
 import com.vaadin.crm.backend.entity.User;
+import com.vaadin.crm.backend.exception.UserNotFoundException;
 import com.vaadin.crm.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServices implements UserDetailsService {
@@ -28,4 +34,36 @@ public class UserServices implements UserDetailsService {
 
         return user;
     }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public ResponseEntity<User> getUserById(Long id) {
+        User user = userRepository
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException("There is not User with this ID: " + id));
+        return ResponseEntity.ok(user);
+    }
+
+    public ResponseEntity<Map<String, Boolean>> deleteUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("There is not User with this ID: " + id));
+        userRepository.deleteById(user.getId());
+        Map<String, Boolean> deletedSuccessfully = new HashMap<>();
+        deletedSuccessfully.put("deleted successfully", Boolean.TRUE);
+        return ResponseEntity.ok(deletedSuccessfully);
+    }
+
+    public ResponseEntity<User> updateUser(User userDetails, Long id) {
+        User user = userRepository
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException("There is not User with this ID: " + id));
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(userDetails.getPassword());
+        user.setRoles(userDetails.getRoles());
+
+        User updatedUserDetails = userRepository.save(user);
+        return ResponseEntity.ok(updatedUserDetails);
+    }
+
 }
