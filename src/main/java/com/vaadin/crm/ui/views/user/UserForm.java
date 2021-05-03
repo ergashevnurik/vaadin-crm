@@ -22,16 +22,15 @@ public class UserForm extends FormLayout {
 
     private User user;
 
-    private TextField usernameField = new TextField();
-    private TextField passwordField = new TextField();
-    private ComboBox<Role> userRoles = new ComboBox<>();
+    private TextField usernameField = new TextField("Enter Username");
+    private TextField passwordField = new TextField("Enter Password");
+    private ComboBox<Role> userRoles = new ComboBox<>("User Role");
 
     private Button addButton;
     private Button deleteButton;
     private Button cancelButton;
 
     private HorizontalLayout horizontalLayoutForButtons;
-    private VerticalLayout verticalLayoutForTextFieldAndComboBoxes;
 
     private Binder<User> bind = new Binder<>(User.class);
 
@@ -40,7 +39,7 @@ public class UserForm extends FormLayout {
         // bind.bindInstanceFields(this);
         userRoles.setItems(Role.values());
 
-        add(initFieldAndComboBox(), initButtons());
+        add(usernameField, passwordField, userRoles, initButtons());
     }
 
     private HorizontalLayout initButtons() {
@@ -69,16 +68,6 @@ public class UserForm extends FormLayout {
         horizontalLayoutForButtons.add(addButton, deleteButton, cancelButton);
 
         return horizontalLayoutForButtons;
-    }
-
-    private VerticalLayout initFieldAndComboBox() {
-        verticalLayoutForTextFieldAndComboBoxes = new VerticalLayout();
-
-        usernameField.setPlaceholder("Enter Username");
-        passwordField.setPlaceholder("Enter Password");
-
-        verticalLayoutForTextFieldAndComboBoxes.add(usernameField, passwordField, userRoles);
-        return verticalLayoutForTextFieldAndComboBoxes;
     }
 
     private void validateAndSave() {

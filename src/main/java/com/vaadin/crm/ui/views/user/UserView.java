@@ -5,6 +5,7 @@ import com.vaadin.crm.backend.Users.services.UserServices;
 import com.vaadin.crm.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -54,6 +55,7 @@ public class UserView extends VerticalLayout {
         grid.setColumns("username", "roles", "password");
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.asSingleSelect().addValueChangeListener(evt -> edit(evt.getValue()));
     }
 

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -20,6 +22,9 @@ import java.util.Map;
 public class UserServices implements UserDetailsService {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServices(UserRepository userRepository) {
@@ -51,7 +56,7 @@ public class UserServices implements UserDetailsService {
 
     public User saveUser(User user) {
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        //user.setRoles(Collections.singleton(Role.USER));
         return userRepository.save(user);
     }
 
