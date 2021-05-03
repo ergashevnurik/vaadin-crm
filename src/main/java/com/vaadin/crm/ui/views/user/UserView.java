@@ -1,7 +1,7 @@
 package com.vaadin.crm.ui.views.user;
 
-import com.vaadin.crm.backend.entity.User;
-import com.vaadin.crm.backend.service.UserServices;
+import com.vaadin.crm.backend.Users.entity.User;
+import com.vaadin.crm.backend.Users.services.UserServices;
 import com.vaadin.crm.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;

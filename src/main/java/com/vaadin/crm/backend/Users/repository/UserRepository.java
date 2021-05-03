@@ -1,7 +1,6 @@
-package com.vaadin.crm.backend.repository;
+package com.vaadin.crm.backend.Users.repository;
 
-import com.vaadin.crm.backend.entity.Lead;
-import com.vaadin.crm.backend.entity.User;
+import com.vaadin.crm.backend.Users.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

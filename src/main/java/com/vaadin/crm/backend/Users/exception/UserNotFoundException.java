@@ -1,4 +1,4 @@
-package com.vaadin.crm.backend.exception;
+package com.vaadin.crm.backend.Users.exception;
 
 import org.omg.PortableServer.THREAD_POLICY_ID;
 

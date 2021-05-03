@@ -6,22 +6,15 @@ hello-world-view,
 
 /* Main Layout */
 
-a[highlight] {
-    font-weight: bold;
-    background: black;
-    padding: 12px 20px;
-    color: #fff;
-    width: 100%;
-}
-
 .header{
-    background: black;
+    background: #22405e;
     color: white;
     padding: 0 var(--lumo-space-e);
 }
 .header h1.logo {
     font-size: 1em;
     margin: var(--lumo-space-e);
+    color: white;
 }
 
 /* List-View */
@@ -59,6 +52,15 @@ a[highlight] {
     padding: 12px 25px;
 }
 
+.logoutDiv a {
+    color: white;
+    font-weight: bold;
+}
+
 .dashboard-view {
     background-size: cover;
+}
+
+#drawer {
+    background: #22405e;
 }

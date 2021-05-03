@@ -1,7 +1,7 @@
 package com.vaadin.crm.ui.views.user;
 
-import com.vaadin.crm.backend.entity.Role;
-import com.vaadin.crm.backend.entity.User;
+import com.vaadin.crm.backend.Users.entity.Role;
+import com.vaadin.crm.backend.Users.entity.User;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;

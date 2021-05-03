@@ -1,4 +1,4 @@
-package com.vaadin.crm.backend.entity;
+package com.vaadin.crm.backend.Users.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

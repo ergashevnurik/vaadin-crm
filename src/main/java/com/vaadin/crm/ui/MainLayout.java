@@ -32,19 +32,15 @@ public class MainLayout extends AppLayout {
 
     private RouterLink listView;
     private Div listViewContainer;
-    private Icon iconOfListView;
 
     private RouterLink leadManagement;
     private Div leadManagementContainer;
-    private Icon iconOfLeadManagement;
 
     private RouterLink dashboard;
     private Div dashboardContainer;
-    private Icon iconOfDashboard;
 
     private RouterLink users;
     private Div usersContainer;
-    private Icon iconOfUsers;
 
     public MainLayout() {
         createHeader();
@@ -56,26 +52,22 @@ public class MainLayout extends AppLayout {
         listViewContainer = new Div();
         listView = new RouterLink("Contacts", ListView.class);
         listView.setHighlightCondition(HighlightConditions.sameLocation());
-        iconOfListView = new Icon(VaadinIcon.TABLE);
-        listViewContainer.add(iconOfListView, listView);
+        listViewContainer.add(listView);
 
         leadManagementContainer = new Div();
         leadManagement = new RouterLink("Lead Management", LeadView.class);
         leadManagement.setHighlightCondition(HighlightConditions.sameLocation());
-        iconOfLeadManagement = new Icon(VaadinIcon.USER);
-        leadManagementContainer.add(iconOfLeadManagement, leadManagement);
+        leadManagementContainer.add(leadManagement);
 
         dashboardContainer = new Div();
         dashboard = new RouterLink("Dashboard", DashboardView.class);
         dashboard.setHighlightCondition(HighlightConditions.sameLocation());
-        iconOfDashboard = new Icon(VaadinIcon.DASHBOARD);
-        dashboardContainer.add(iconOfDashboard, dashboard);
+        dashboardContainer.add(dashboard);
 
         usersContainer = new Div();
         users = new RouterLink("User", UserView.class);
         users.setHighlightCondition(HighlightConditions.sameLocation());
-        iconOfUsers = new Icon(VaadinIcon.USERS);
-        usersContainer.add(iconOfUsers, users);
+        usersContainer.add(users);
 
         addToDrawer(new VerticalLayout(
                 dashboardContainer,

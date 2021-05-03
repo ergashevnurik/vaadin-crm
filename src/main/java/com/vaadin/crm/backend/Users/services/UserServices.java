@@ -1,9 +1,9 @@
-package com.vaadin.crm.backend.service;
+package com.vaadin.crm.backend.Users.services;
 
-import com.vaadin.crm.backend.entity.Lead;
-import com.vaadin.crm.backend.entity.User;
-import com.vaadin.crm.backend.exception.UserNotFoundException;
-import com.vaadin.crm.backend.repository.UserRepository;
+import com.vaadin.crm.backend.Users.entity.Role;
+import com.vaadin.crm.backend.Users.entity.User;
+import com.vaadin.crm.backend.Users.exception.UserNotFoundException;
+import com.vaadin.crm.backend.Users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,8 @@ public class UserServices implements UserDetailsService {
     }
 
     public User saveUser(User user) {
+        user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
         return userRepository.save(user);
     }
 
