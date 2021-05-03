@@ -3,6 +3,8 @@ package com.vaadin.crm.ui;
 import com.vaadin.crm.ui.views.dashboard.DashboardView;
 import com.vaadin.crm.ui.views.lead.LeadView;
 import com.vaadin.crm.ui.views.list.ListView;
+import com.vaadin.crm.ui.views.orders.OrdersView;
+import com.vaadin.crm.ui.views.products.ProductsView;
 import com.vaadin.crm.ui.views.user.UserView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -42,6 +44,12 @@ public class MainLayout extends AppLayout {
     private RouterLink users;
     private Div usersContainer;
 
+    private RouterLink orders;
+    private Div ordersContainer;
+
+    private RouterLink products;
+    private Div productContainer;
+
     public MainLayout() {
         createHeader();
         createDrawer();
@@ -64,16 +72,29 @@ public class MainLayout extends AppLayout {
         dashboard.setHighlightCondition(HighlightConditions.sameLocation());
         dashboardContainer.add(dashboard);
 
+        ordersContainer = new Div();
+        orders = new RouterLink("Orders", OrdersView.class);
+        orders.setHighlightCondition(HighlightConditions.sameLocation());
+        ordersContainer.add(orders);
+
         usersContainer = new Div();
         users = new RouterLink("User", UserView.class);
         users.setHighlightCondition(HighlightConditions.sameLocation());
         usersContainer.add(users);
 
+        productContainer = new Div();
+        products = new RouterLink("Product", ProductsView.class);
+        products.setHighlightCondition(HighlightConditions.sameLocation());
+        productContainer.add(products);
+
+
         addToDrawer(new VerticalLayout(
                 dashboardContainer,
                 listViewContainer,
-                leadManagementContainer,
-                usersContainer
+//                leadManagementContainer,
+                usersContainer,
+                ordersContainer,
+                productContainer
         ));
     }
 
