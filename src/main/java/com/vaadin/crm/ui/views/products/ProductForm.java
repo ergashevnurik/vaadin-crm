@@ -28,6 +28,7 @@ public class ProductForm extends FormLayout {
 
     private Button saveBtn;
     private Button cancelBtn;
+    private Button deleteBtn;
 
     public ProductForm(List<Products> products) {
         setSizeFull();
@@ -60,8 +61,13 @@ public class ProductForm extends FormLayout {
         cancelBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         cancelBtn.addClickListener(e -> fireEvent(new ProductForm.CancelEvent(this)));
 
+        deleteBtn = new Button();
+        deleteBtn.addClickListener(e -> fireEvent(new ProductForm.DeleteEvent(this, products)));
+        deleteBtn.setText("Delete");
+        deleteBtn.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
         HorizontalLayout horizontalLayout = new HorizontalLayout();
-        horizontalLayout.add(cancelBtn, saveBtn);
+        horizontalLayout.add(cancelBtn, deleteBtn, saveBtn);
         mainLayout.add(horizontalLayout);
         return mainLayout;
     }
