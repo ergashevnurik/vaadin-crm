@@ -31,7 +31,7 @@ public class ProductForm extends FormLayout {
 
     public ProductForm(List<Products> products) {
         setSizeFull();
-        addClassName("list-view");
+        addClassName("contact-form");
 
         add(
                 productName,
