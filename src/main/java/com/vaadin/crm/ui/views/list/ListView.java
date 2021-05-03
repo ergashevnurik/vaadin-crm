@@ -7,7 +7,10 @@ import com.vaadin.crm.backend.service.ContactService;
 import com.vaadin.crm.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -53,8 +56,12 @@ public class ListView extends VerticalLayout {
         textField.setValueChangeMode(ValueChangeMode.LAZY);
         textField.addValueChangeListener(e -> updateList());
 
-        Button addContactButton = new Button("Add Contact", click -> addContact());
-        HorizontalLayout toolbar = new HorizontalLayout(textField, addContactButton);
+        Button addContactButton = new Button("", click -> addContact());
+        Icon addIcon = new Icon(VaadinIcon.PLUS);
+        addIcon.getStyle().set("color", "green");
+        addContactButton.setIcon(addIcon);
+
+        HorizontalLayout toolbar = new HorizontalLayout(addContactButton, textField);
         toolbar.addClassName("toolbar");
 
         return toolbar;
@@ -94,6 +101,8 @@ public class ListView extends VerticalLayout {
             Company company = contact.getCompany();
             return company == null ? "-" : company.getName();
         }).setHeader("Company");
+
+        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
