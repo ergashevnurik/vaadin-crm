@@ -10,14 +10,6 @@ import com.vaadin.flow.router.Route;
 @Route(value = "orders", layout = MainLayout.class)
 public class OrdersView extends Div {
 
-    private TextField dueField;
-    private TextField customerFullNameField;
-    private TextField phoneNumber;
-    private TextField timeInHours;
-    private TextField location;
-    private TextField additionalDetails;
-    private TextField product;
-
     public OrdersView() {
 
     }
