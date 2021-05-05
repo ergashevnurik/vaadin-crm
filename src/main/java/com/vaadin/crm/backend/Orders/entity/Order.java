@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -24,13 +26,20 @@ public class Order {
     private Long id;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderColumn
     @JoinColumn
     private List<Products> products;
 
-    private String additionalInfo;
     private Integer numberOfProducts;
+
+    private LocalDate dueDate;
+    private LocalTime time;
+    private String location;
+
+    private String customerFullName;
+    private String additionalInfo;
+    private String phoneNumber;
 
     public Long getId() {
         return id;
@@ -64,13 +73,58 @@ public class Order {
         this.numberOfProducts = numberOfProducts;
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCustomerFullName() {
+        return customerFullName;
+    }
+
+    public void setCustomerFullName(String customerFullName) {
+        this.customerFullName = customerFullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", products=" + products +
-                ", additionalInfo='" + additionalInfo + '\'' +
                 ", numberOfProducts=" + numberOfProducts +
+                ", dueDate=" + dueDate +
+                ", time=" + time +
+                ", location='" + location + '\'' +
+                ", customerFullName='" + customerFullName + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

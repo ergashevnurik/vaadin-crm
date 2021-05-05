@@ -14,6 +14,16 @@ public class ProductsService {
     @Autowired
     private ProductRepository productRepository;
 
+    private static ProductsService instance = new ProductsService();
+
+    public static ProductsService getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(ProductsService instance) {
+        ProductsService.instance = instance;
+    }
+
     public List<Products> getAllProducts() {
         return (List<Products>) productRepository.findAll();
     }

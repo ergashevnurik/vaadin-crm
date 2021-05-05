@@ -2,6 +2,7 @@ package com.vaadin.crm.ui.views.orders;
 
 import com.vaadin.crm.backend.Orders.entity.Order;
 import com.vaadin.crm.backend.Products.entity.Products;
+import com.vaadin.crm.backend.Products.services.ProductsService;
 import com.vaadin.crm.ui.MainLayout;
 import com.vaadin.crm.ui.views.products.ProductForm;
 import com.vaadin.flow.component.Component;
@@ -25,6 +26,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.Registration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -51,6 +53,8 @@ public class OrdersForm extends FormLayout {
 
     private Order order;
     private Binder<Order> binder = new Binder<>(Order.class);
+
+    private Select<String> productsSelect;
 
     public OrdersForm(List<Order> orders) {
         setSizeFull();
@@ -109,6 +113,14 @@ public class OrdersForm extends FormLayout {
         additionalInfoField.setClearButtonVisible(true);
         customerDetailsContainer.add(additionalInfoField);
 
+        productsSelect = new Select<>();
+        productsSelect.setSizeFull();
+        //productsSelect.setItems(ProductsService.getInstance().getAllProducts());
+        productsSelect.setItems("Hello", "World");
+        productsSelect.addToPrefix(new Icon(VaadinIcon.BOOK));
+        productsSelect.setLabel("Products Available");
+        customerDetailsContainer.add(productsSelect);
+
 
         phoneNumberDetailsContainer = new VerticalLayout();
 
@@ -145,9 +157,20 @@ public class OrdersForm extends FormLayout {
         return mainLayout;
     }
 
+    private Order setValues() {
+        order.setDueDate(dueDate.getValue());
+        order.setTime(timeRange.getValue());
+        order.setLocation(location.getValue());
+        order.setCustomerFullName(customerFullNameField.getValue());
+        order.setAdditionalInfo(additionalInfoField.getValue());
+        order.setPhoneNumber(phoneNumberField.getValue());
+        //order.setProducts((List<Products>) productsSelect.getValue());
+        return order;
+    }
+
     private void validateAndSave() {
         try {
-            binder.writeBean(order);
+            binder.writeBean(setValues());
             fireEvent(new SaveEvent(this, order));
         } catch (ValidationException e) {
             e.printStackTrace();

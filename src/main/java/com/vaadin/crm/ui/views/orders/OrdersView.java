@@ -56,7 +56,7 @@ public class OrdersView extends Div {
     private void configureGrid() {
         grid.setClassName("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("id", "numberOfProducts", "additionalInfo", "products");
+        grid.setColumns("id", "dueDate", "time", "location", "customerFullName", "phoneNumber", "numberOfProducts", "additionalInfo", "products");
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
